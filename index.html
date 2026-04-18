@@ -1,280 +1,1415 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SI Analytics | Accelerated Data Analytics Boot Camp</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-<title>SI Analytics Accelerated Data Analytics Boot Camp</title>
+    :root {
+      --navy: #0D1B2A;
+      --navy-mid: #162336;
+      --gold: #E8A318;
+      --gold-light: #F5C144;
+      --teal: #1A7A8A;
+      --teal-light: #23A0B4;
+      --white: #FFFFFF;
+      --off-white: #F7F6F2;
+      --light-grey: #EEF0F3;
+      --text-muted: #6B7280;
+      --border: #E2E5EA;
+      --serif: 'DM Serif Display', Georgia, serif;
+      --sans: 'DM Sans', sans-serif;
+    }
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    html { scroll-behavior: smooth; }
 
-<style>
-body {
-    font-family: 'Inter', sans-serif;
-    margin: 0;
-    background: #F8FAFC;
-    color: #0F172A;
-    line-height: 1.6;
-}
+    body {
+      font-family: var(--sans);
+      background: var(--white);
+      color: var(--navy);
+      line-height: 1.65;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+    }
 
-.container {
-    max-width: 1100px;
-    margin: auto;
-    padding: 60px 20px;
-}
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(13, 27, 42, 0.97);
+      backdrop-filter: blur(8px);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5%;
+      height: 68px;
+      border-bottom: 1px solid rgba(232, 163, 24, 0.2);
+    }
+    .nav-logo { height: 36px; display: flex; align-items: center; gap: 10px; }
+    .nav-logo img { height: 36px; width: auto; }
+    .nav-logo-text {
+      font-family: var(--serif);
+      color: var(--white);
+      font-size: 1.1rem;
+      letter-spacing: 0.02em;
+    }
+    .nav-cta {
+      background: var(--gold);
+      color: var(--navy);
+      font-weight: 600;
+      font-size: 0.85rem;
+      padding: 10px 22px;
+      border-radius: 6px;
+      text-decoration: none;
+      letter-spacing: 0.03em;
+      transition: background 0.2s;
+    }
+    .nav-cta:hover { background: var(--gold-light); }
 
-h1, h2, h3 {
-    margin-bottom: 15px;
-}
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      background: var(--navy);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 68px 5% 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; top: 0; right: 0;
+      width: 55%; height: 100%;
+      background: linear-gradient(135deg, #1A7A8A22 0%, #E8A31811 60%, transparent 100%);
+      pointer-events: none;
+    }
+    .hero-geo {
+      position: absolute; bottom: -80px; left: -80px;
+      width: 380px; height: 380px;
+      border-radius: 50%;
+      border: 1px solid rgba(232, 163, 24, 0.1);
+    }
+    .hero-geo2 {
+      position: absolute; top: 100px; right: 80px;
+      width: 220px; height: 220px;
+      border-radius: 50%;
+      border: 1px solid rgba(26, 122, 138, 0.15);
+    }
+    .hero-left { position: relative; z-index: 2; padding-right: 6%; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(232, 163, 24, 0.12);
+      border: 1px solid rgba(232, 163, 24, 0.3);
+      color: var(--gold);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 100px;
+      margin-bottom: 28px;
+    }
+    .hero-badge .dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--gold);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+    .hero h1 {
+      font-family: var(--serif);
+      font-size: clamp(2.6rem, 4vw, 3.8rem);
+      color: var(--white);
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--gold);
+    }
+    .hero-sub {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,0.72);
+      max-width: 520px;
+      margin-bottom: 12px;
+      font-weight: 300;
+    }
+    .hero-outcome {
+      background: rgba(26, 122, 138, 0.15);
+      border-left: 3px solid var(--teal-light);
+      padding: 14px 18px;
+      border-radius: 0 8px 8px 0;
+      margin: 24px 0 32px;
+      max-width: 520px;
+    }
+    .hero-outcome p {
+      color: rgba(255,255,255,0.88);
+      font-size: 0.97rem;
+      line-height: 1.6;
+    }
+    .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--gold);
+      color: var(--navy);
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 14px 30px;
+      border-radius: 8px;
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      transition: all 0.2s;
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+    .btn-secondary {
+      background: transparent;
+      color: var(--white);
+      font-weight: 500;
+      font-size: 0.95rem;
+      padding: 14px 28px;
+      border-radius: 8px;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.3);
+      transition: all 0.2s;
+    }
+    .btn-secondary:hover { border-color: rgba(255,255,255,0.6); background: rgba(255,255,255,0.06); }
+    .hero-right {
+      position: relative; z-index: 2;
+      display: flex; flex-direction: column; gap: 16px;
+    }
+    .hero-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 14px;
+      padding: 24px 28px;
+    }
+    .hero-card-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+    .hero-card-value {
+      font-family: var(--serif);
+      font-size: 1.6rem;
+      color: var(--white);
+      line-height: 1.2;
+    }
+    .hero-card-sub {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.55);
+      margin-top: 4px;
+    }
+    .hero-stats {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .hero-stat {
+      background: rgba(13,27,42,0.8);
+      padding: 20px;
+      text-align: center;
+    }
+    .hero-stat-num {
+      font-family: var(--serif);
+      font-size: 1.8rem;
+      color: var(--gold);
+    }
+    .hero-stat-label {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.5);
+      margin-top: 3px;
+    }
+    .hero-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .hero-tag {
+      background: rgba(26,122,138,0.2);
+      border: 1px solid rgba(26,122,138,0.3);
+      color: var(--teal-light);
+      font-size: 0.8rem;
+      font-weight: 500;
+      padding: 5px 12px;
+      border-radius: 100px;
+    }
+    .hero-affordability {
+      background: rgba(232,163,24,0.1);
+      border: 1px solid rgba(232,163,24,0.25);
+      border-radius: 10px;
+      padding: 14px 18px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .hero-affordability .icon { font-size: 1.4rem; flex-shrink: 0; }
+    .hero-affordability p {
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.8);
+    }
+    .hero-affordability strong { color: var(--gold); }
 
-h1 {
-    font-size: 42px;
-    font-weight: 700;
-}
+    /* ── SECTION BASE ── */
+    section { padding: 90px 5%; }
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(1.9rem, 3vw, 2.6rem);
+      color: var(--navy);
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .section-desc {
+      font-size: 1rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin-bottom: 52px;
+      line-height: 1.7;
+    }
+    .center { text-align: center; }
+    .center .section-desc { margin-left: auto; margin-right: auto; }
 
-h2 {
-    font-size: 30px;
-}
+    /* ── SOCIAL PROOF BAR ── */
+    .proof-bar {
+      background: var(--navy);
+      padding: 48px 5%;
+    }
+    .proof-bar-inner { max-width: 1200px; margin: 0 auto; }
+    .proof-title {
+      text-align: center;
+      font-size: 0.78rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 36px;
+      font-weight: 500;
+    }
+    .proof-logos {
+      display: flex; align-items: center; justify-content: center;
+      flex-wrap: wrap; gap: 48px;
+    }
+    .proof-logo-item {
+      display: flex; align-items: center; gap: 10px;
+      opacity: 0.6;
+      transition: opacity 0.2s;
+    }
+    .proof-logo-item:hover { opacity: 1; }
+    .proof-logo-icon {
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .proof-logo-text {
+      color: var(--white);
+      font-size: 0.9rem;
+      font-weight: 500;
+      line-height: 1.2;
+    }
+    .proof-logo-sub {
+      color: rgba(255,255,255,0.4);
+      font-size: 0.72rem;
+    }
+    .proof-quotes {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 48px;
+    }
+    .proof-quote {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 24px;
+    }
+    .proof-stars { color: var(--gold); font-size: 0.9rem; margin-bottom: 12px; letter-spacing: 2px; }
+    .proof-quote p {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.75);
+      line-height: 1.65;
+      font-style: italic;
+      margin-bottom: 16px;
+    }
+    .proof-author {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--white);
+    }
+    .proof-role {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.45);
+    }
+    .proof-badge {
+      display: inline-block;
+      background: rgba(26,122,138,0.2);
+      border: 1px solid rgba(26,122,138,0.3);
+      color: var(--teal-light);
+      font-size: 0.73rem;
+      padding: 3px 10px;
+      border-radius: 100px;
+      margin-top: 8px;
+    }
 
-p {
-    color: #475569;
-}
+    /* ── PROGRAMME OVERVIEW ── */
+    .overview { background: var(--off-white); }
+    .overview-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 60px; align-items: start;
+    }
+    .overview-features { display: flex; flex-direction: column; gap: 20px; }
+    .feature-row {
+      display: flex; gap: 16px; align-items: flex-start;
+    }
+    .feature-icon {
+      width: 44px; height: 44px;
+      background: var(--navy);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .feature-text h4 {
+      font-weight: 600; font-size: 0.97rem;
+      color: var(--navy); margin-bottom: 3px;
+    }
+    .feature-text p {
+      font-size: 0.87rem; color: var(--text-muted); line-height: 1.5;
+    }
+    .delivery-card {
+      background: var(--navy);
+      border-radius: 16px;
+      padding: 36px;
+      color: var(--white);
+    }
+    .delivery-card h3 {
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      margin-bottom: 24px;
+    }
+    .delivery-item {
+      display: flex; gap: 14px;
+      align-items: flex-start;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .delivery-item:last-child { border-bottom: none; }
+    .delivery-item-label { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 3px; }
+    .delivery-item-value { font-size: 0.97rem; color: rgba(255,255,255,0.88); font-weight: 500; }
+    .delivery-item-sub { font-size: 0.82rem; color: rgba(255,255,255,0.45); }
 
-/* HERO */
-.hero {
-    background: linear-gradient(135deg, #0F172A, #0F766E);
-    color: white;
-    text-align: center;
-    padding: 100px 20px;
-}
+    /* ── CURRICULUM ── */
+    .curriculum { background: var(--white); }
+    .accordion-wrap { display: flex; flex-direction: column; gap: 12px; max-width: 860px; margin: 0 auto; }
+    .accordion {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: box-shadow 0.2s;
+    }
+    .accordion:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.07); }
+    .accordion-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 22px 26px;
+      cursor: pointer;
+      background: var(--white);
+      transition: background 0.2s;
+      border: none; width: 100%; text-align: left;
+      gap: 16px;
+    }
+    .accordion-header:hover { background: var(--off-white); }
+    .accordion.open .accordion-header { background: var(--off-white); }
+    .acc-left { display: flex; align-items: center; gap: 16px; }
+    .acc-num {
+      width: 36px; height: 36px;
+      background: var(--navy);
+      color: var(--white);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem; font-weight: 700;
+      flex-shrink: 0;
+    }
+    .accordion.open .acc-num { background: var(--teal); }
+    .acc-title { font-weight: 600; font-size: 1rem; color: var(--navy); }
+    .acc-subtitle { font-size: 0.82rem; color: var(--text-muted); margin-top: 2px; }
+    .acc-week {
+      font-size: 0.75rem; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--teal);
+      flex-shrink: 0;
+    }
+    .acc-chevron {
+      flex-shrink: 0;
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: var(--light-grey);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem;
+      transition: transform 0.25s;
+      color: var(--navy);
+    }
+    .accordion.open .acc-chevron { transform: rotate(180deg); background: var(--teal); color: white; }
+    .accordion-body {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.35s ease, padding 0.25s;
+      padding: 0 26px;
+    }
+    .accordion.open .accordion-body {
+      max-height: 600px;
+      padding: 0 26px 26px;
+    }
+    .acc-topics {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 8px; margin-top: 4px;
+    }
+    .acc-topic {
+      display: flex; align-items: flex-start; gap: 8px;
+      font-size: 0.88rem; color: #374151;
+      padding: 6px 0;
+    }
+    .acc-topic::before {
+      content: '→';
+      color: var(--teal);
+      font-size: 0.85rem;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .acc-outcome {
+      background: rgba(26,122,138,0.07);
+      border-left: 3px solid var(--teal);
+      padding: 12px 16px;
+      border-radius: 0 8px 8px 0;
+      margin-top: 16px;
+      font-size: 0.88rem;
+      color: var(--navy);
+      line-height: 1.55;
+    }
+    .acc-outcome strong { color: var(--teal); }
 
-.hero p {
-    color: #E2E8F0;
-}
+    /* ── INSTRUCTORS ── */
+    .instructors { background: var(--off-white); }
+    .instructors-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 24px;
+    }
+    .instructor-card {
+      background: var(--white);
+      border-radius: 14px;
+      padding: 28px;
+      border: 1px solid var(--border);
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .instructor-card:hover {
+      box-shadow: 0 8px 32px rgba(0,0,0,0.09);
+      transform: translateY(-2px);
+    }
+    .instructor-top { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 16px; }
+    .instructor-avatar {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+      background: var(--light-grey);
+      border: 2px solid var(--border);
+    }
+    .instructor-avatar-placeholder {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--teal) 0%, var(--navy) 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--serif);
+      font-size: 1.4rem;
+      color: var(--white);
+      flex-shrink: 0;
+    }
+    .instructor-meta { flex: 1; }
+    .instructor-name {
+      font-weight: 700; font-size: 0.97rem;
+      color: var(--navy); line-height: 1.3;
+    }
+    .instructor-title {
+      font-size: 0.8rem; color: var(--teal);
+      font-weight: 500; margin-top: 2px;
+    }
+    .instructor-org {
+      font-size: 0.78rem; color: var(--text-muted); margin-top: 2px;
+    }
+    .instructor-bio {
+      font-size: 0.87rem; color: #4B5563;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+    .instructor-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+    .instructor-tag {
+      background: var(--light-grey);
+      color: var(--navy);
+      font-size: 0.73rem;
+      font-weight: 500;
+      padding: 3px 10px;
+      border-radius: 100px;
+    }
+    .instructor-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 0.8rem; font-weight: 600;
+      color: var(--teal);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .instructor-link:hover { color: var(--navy); }
+    .linkedin-icon {
+      width: 16px; height: 16px;
+      background: #0A66C2;
+      border-radius: 3px;
+      display: inline-flex; align-items: center; justify-content: center;
+      color: white; font-size: 0.6rem; font-weight: 700;
+    }
 
-.btn {
-    display: inline-block;
-    padding: 14px 28px;
-    background: #FACC15;
-    color: #0F172A;
-    border-radius: 6px;
-    font-weight: 600;
-    text-decoration: none;
-    margin-top: 20px;
-}
+    /* ── FAQ ── */
+    .faq { background: var(--white); }
+    .faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 40px; }
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+      padding: 20px 0;
+    }
+    .faq-q {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      cursor: pointer; gap: 16px;
+    }
+    .faq-q-text {
+      font-weight: 600; font-size: 0.95rem; color: var(--navy); line-height: 1.4;
+    }
+    .faq-toggle {
+      color: var(--teal); font-size: 1.2rem; flex-shrink: 0;
+      transition: transform 0.25s; line-height: 1;
+    }
+    .faq-item.open .faq-toggle { transform: rotate(45deg); }
+    .faq-a {
+      font-size: 0.9rem; color: var(--text-muted); line-height: 1.65;
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.3s ease, margin 0.2s;
+    }
+    .faq-item.open .faq-a {
+      max-height: 300px;
+      margin-top: 12px;
+    }
 
-/* GRID */
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 30px;
-}
+    /* ── CTA ── */
+    .cta-section {
+      background: var(--navy);
+      text-align: center;
+      padding: 100px 5%;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-section::before {
+      content: '';
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(232,163,24,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .cta-section .section-label { color: var(--gold-light); text-align: center; display: block; margin-bottom: 14px; }
+    .cta-title {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      color: var(--white);
+      margin-bottom: 16px;
+      line-height: 1.15;
+    }
+    .cta-title em { font-style: italic; color: var(--gold); }
+    .cta-desc {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.65);
+      max-width: 560px;
+      margin: 0 auto 36px;
+      line-height: 1.65;
+    }
+    .cta-buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    .cta-secondary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: transparent;
+      color: rgba(255,255,255,0.75);
+      font-size: 0.95rem;
+      padding: 14px 28px;
+      border-radius: 8px;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.2);
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    .cta-secondary:hover { border-color: rgba(255,255,255,0.5); color: var(--white); }
+    .cta-note {
+      margin-top: 24px;
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.35);
+    }
+    .cta-note a { color: var(--gold); text-decoration: none; }
 
-/* CARDS */
-.card {
-    background: white;
-    padding: 25px;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-}
+    /* ── FOOTER ── */
+    footer {
+      background: #07111C;
+      padding: 48px 5%;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 20px;
+    }
+    .footer-logo { height: 30px; opacity: 0.8; }
+    .footer-links { display: flex; gap: 28px; flex-wrap: wrap; }
+    .footer-links a {
+      font-size: 0.82rem; color: rgba(255,255,255,0.4);
+      text-decoration: none; transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--white); }
+    .footer-copy { font-size: 0.8rem; color: rgba(255,255,255,0.25); }
 
-/* ACCORDION */
-.accordion {
-    background: white;
-    border-radius: 8px;
-    margin-bottom: 10px;
-    overflow: hidden;
-}
+    /* ── UTILITIES ── */
+    .divider {
+      width: 48px; height: 3px;
+      background: var(--gold);
+      border-radius: 2px;
+      margin-bottom: 32px;
+    }
+    .center .divider { margin-left: auto; margin-right: auto; }
 
-.accordion-header {
-    padding: 18px;
-    cursor: pointer;
-    font-weight: 600;
-    background: #F1F5F9;
-}
-
-.accordion-content {
-    padding: 18px;
-    display: none;
-}
-
-/* INSTRUCTORS */
-.instructor {
-    text-align: center;
-}
-
-.avatar {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background: #0F766E;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: auto;
-    font-weight: bold;
-}
-
-/* CTA */
-.cta {
-    background: #0F172A;
-    color: white;
-    text-align: center;
-    padding: 80px 20px;
-}
-
-footer {
-    text-align: center;
-    padding: 30px;
-    font-size: 14px;
-    color: #64748B;
-}
-</style>
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; min-height: auto; padding-top: 100px; padding-bottom: 60px; }
+      .hero-right { display: none; }
+      .overview-grid { grid-template-columns: 1fr; }
+      .proof-quotes { grid-template-columns: 1fr; }
+      .faq-grid { grid-template-columns: 1fr; }
+      .instructors-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .acc-topics { grid-template-columns: 1fr; }
+      .hero-stats { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
-
 <body>
 
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <img src="https://raw.githubusercontent.com/SIAnalyticsLab/si-analytics-academy/main/assets/logo.png"
+         alt="SI Analytics"
+         onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+    <span class="nav-logo-text" style="display:none;">SI Analytics</span>
+    <span class="nav-logo-text">Accelerated Boot Camp</span>
+  </div>
+  <a href="#register" class="nav-cta">Register Now ›</a>
+</nav>
+
 <!-- HERO -->
-<section class="hero">
-    <h1>Accelerated Data Analytics Boot Camp</h1>
-    <p>Build practical, job-ready data analytics skills in 6 weeks through structured learning, mentorship, and real-world application.</p>
-    <a href="https://echo.zoom.us/meeting/register/o890jzUFTT2YPC2kCZ3uMg" class="btn">Register for Information Session</a>
+<section class="hero" id="top">
+  <div class="hero-geo"></div>
+  <div class="hero-geo2"></div>
+
+  <div class="hero-left">
+    <div class="hero-badge">
+      <span class="dot"></span>
+      Cohort 1 · Starts 7 June 2026
+    </div>
+    <h1>Launch Your <em>Data Analytics</em> Career in Six Weeks</h1>
+    <p class="hero-sub">A rigorous, mentor-guided programme designed for health and development professionals ready to transition into analytics-driven roles.</p>
+
+    <div class="hero-outcome">
+      <p>By the end of this programme, learners will be able to clean, analyse, and visualise real-world datasets using Excel, R, and Power BI, and present findings through a polished, publication-ready portfolio. All of this is achievable within six weeks of structured, part-time study.</p>
+    </div>
+
+    <div class="hero-tags" style="margin-bottom: 28px;">
+      <span class="hero-tag">Microsoft Excel</span>
+      <span class="hero-tag">R &amp; R Programming</span>
+      <span class="hero-tag">Power BI + DAX</span>
+      <span class="hero-tag">Capstone Portfolio</span>
+    </div>
+
+    <div class="hero-affordability" style="margin-bottom: 32px;">
+      <span class="icon">🎓</span>
+      <p><strong>Subsidised by a donor partner.</strong> This programme is highly affordable, with tiered pricing for participants from low- and middle-income countries. Cost should never be a barrier to quality training.</p>
+    </div>
+
+    <div class="hero-ctas">
+      <a href="#register" class="btn-primary">Secure Your Spot ›</a>
+      <a href="https://echo.zoom.us/meeting/register/o890jzUFTT2YPC2kCZ3uMg" target="_blank" class="btn-secondary">Attend Free Info Session</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-card">
+      <div class="hero-card-label">Programme Format</div>
+      <div class="hero-card-value">Virtual · Flipped Classroom</div>
+      <div class="hero-card-sub">Learn at your own pace, guided by expert mentors each week</div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-card-label">Session Times</div>
+      <div class="hero-card-value">Sundays</div>
+      <div class="hero-card-sub">2:00 PM EDT · 7:00 PM WAT<br>or 1:00 PM EDT · 6:00 PM WAT</div>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-num">6</div>
+        <div class="hero-stat-label">Weeks</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">4.9</div>
+        <div class="hero-stat-label">Avg Rating</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">500+</div>
+        <div class="hero-stat-label">Alumni</div>
+      </div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-card-label">Tools You Will Master</div>
+      <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:8px;">
+        <span class="hero-tag">Excel</span>
+        <span class="hero-tag">R</span>
+        <span class="hero-tag">Power BI</span>
+        <span class="hero-tag">DAX</span>
+        <span class="hero-tag">ggplot2</span>
+        <span class="hero-tag">dplyr</span>
+      </div>
+    </div>
+  </div>
 </section>
 
-<!-- OUTCOME -->
-<section class="container">
-    <h2>What You Will Be Able To Do</h2>
-    <p>By the end of this program, you will independently analyze real-world datasets, build dashboards, and communicate insights with clarity. Within six weeks, you will develop a portfolio that demonstrates applied analytical thinking and technical execution.</p>
+<!-- SOCIAL PROOF BAR -->
+<div class="proof-bar">
+  <div class="proof-bar-inner">
+    <p class="proof-title">Trusted by professionals across leading organisations and sectors</p>
+    <div class="proof-logos">
+      <div class="proof-logo-item">
+        <div class="proof-logo-icon" style="background:rgba(255,255,255,0.1);">🏥</div>
+        <div>
+          <div class="proof-logo-text">PEPFAR</div>
+          <div class="proof-logo-sub">Global Health</div>
+        </div>
+      </div>
+      <div class="proof-logo-item">
+        <img src="/mnt/user-data/uploads/1776551752649_image.png" alt="Mobilae"
+             style="height:36px; width:auto; filter: brightness(0) invert(1);"
+             onerror="this.parentElement.innerHTML='<div class=\'proof-logo-icon\' style=\'background:rgba(255,255,255,0.1);\'>🌐</div><div><div class=\'proof-logo-text\'>Mobilae</div><div class=\'proof-logo-sub\'>Health Tech</div></div>';" />
+      </div>
+      <div class="proof-logo-item">
+        <img src="/mnt/user-data/uploads/1776551759016_image.png" alt="FIND"
+             style="height:36px; width:auto; filter: brightness(0) invert(1);"
+             onerror="this.parentElement.innerHTML='<div class=\'proof-logo-icon\' style=\'background:rgba(255,255,255,0.1);\'>🔬</div><div><div class=\'proof-logo-text\'>FIND</div><div class=\'proof-logo-sub\'>Diagnostics</div></div>';" />
+      </div>
+      <div class="proof-logo-item">
+        <div class="proof-logo-icon" style="background:rgba(255,255,255,0.1);">🏛️</div>
+        <div>
+          <div class="proof-logo-text">CDC / USAID</div>
+          <div class="proof-logo-sub">Public Health</div>
+        </div>
+      </div>
+      <div class="proof-logo-item">
+        <div class="proof-logo-icon" style="background:rgba(255,255,255,0.1);">🎓</div>
+        <div>
+          <div class="proof-logo-text">Academia</div>
+          <div class="proof-logo-sub">Universities &amp; Research</div>
+        </div>
+      </div>
+      <div class="proof-logo-item">
+        <div class="proof-logo-icon" style="background:rgba(255,255,255,0.1);">🌍</div>
+        <div>
+          <div class="proof-logo-text">NGO / INGOs</div>
+          <div class="proof-logo-sub">Global Development</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proof-quotes">
+      <div class="proof-quote">
+        <div class="proof-stars">★★★★★</div>
+        <p>"The mentorship journey was phenomenal, from understanding basic statistics to mastering STATA analysis. Explicit, interactive, and deeply rewarding."</p>
+        <div class="proof-author">Olufunmilola Falola-Owosho</div>
+        <div class="proof-role">Chief Operating Officer, MRH Collective</div>
+        <span class="proof-badge">99% rated 'Exceptional Learning Experience'</span>
+      </div>
+      <div class="proof-quote">
+        <div class="proof-stars">★★★★★</div>
+        <p>"Practical, structured, and detailed enough for any beginner to grasp complex analytics concepts effortlessly."</p>
+        <div class="proof-author">Dr Bodunde (Adeyemo) Onifade, MD, MPH</div>
+        <div class="proof-role">PEPFAR Data Manager</div>
+        <span class="proof-badge">98% rated the programme as 'Highly Practical'</span>
+      </div>
+      <div class="proof-quote">
+        <div class="proof-stars">★★★★★</div>
+        <p>"The lessons, collaboration, and networking continue even after the programme. Truly transformative and invaluable."</p>
+        <div class="proof-author">Dr Nduka Moseri, PhD, MBA, CFA</div>
+        <div class="proof-role">Global Divisional Director of Finance, ARISE TV Media</div>
+        <span class="proof-badge">100% felt more confident applying data skills post-training</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROGRAMME OVERVIEW -->
+<section class="overview">
+  <div class="overview-grid">
+    <div>
+      <div class="section-label">Why This Programme</div>
+      <div class="divider"></div>
+      <h2 class="section-title">Built for Professionals. Designed for Impact.</h2>
+      <p class="section-desc">This is not a passive online course. It is a structured, mentor-led experience that builds real competencies through applied projects and regular expert feedback.</p>
+      <div class="overview-features">
+        <div class="feature-row">
+          <div class="feature-icon">🎯</div>
+          <div class="feature-text">
+            <h4>Flipped Classroom Model</h4>
+            <p>Pre-recorded content equips you before each live session, maximising in-class time for application, discussion, and mentorship.</p>
+          </div>
+        </div>
+        <div class="feature-row">
+          <div class="feature-icon">📊</div>
+          <div class="feature-text">
+            <h4>Real-World Datasets</h4>
+            <p>All exercises use authentic public health and development datasets so your skills transfer directly to your work environment.</p>
+          </div>
+        </div>
+        <div class="feature-row">
+          <div class="feature-icon">🧑‍💼</div>
+          <div class="feature-text">
+            <h4>Portfolio and Resume Revamp</h4>
+            <p>Leave with a complete project portfolio and a professionally revamped CV, not just a certificate of completion.</p>
+          </div>
+        </div>
+        <div class="feature-row">
+          <div class="feature-icon">🌍</div>
+          <div class="feature-text">
+            <h4>LMIC-Responsive Pricing</h4>
+            <p>Subsidised by a generous donor partner, with dedicated pricing tiers for participants from low- and middle-income settings.</p>
+          </div>
+        </div>
+        <div class="feature-row">
+          <div class="feature-icon">🔗</div>
+          <div class="feature-text">
+            <h4>Alumni Network Access</h4>
+            <p>Join a growing community of 500+ analytics professionals across global health, government, academia, and the private sector.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="delivery-card">
+        <h3>Programme at a Glance</h3>
+        <div class="delivery-item">
+          <div>
+            <div class="delivery-item-label">Start Date</div>
+            <div class="delivery-item-value">Sunday, 7 June 2026</div>
+          </div>
+        </div>
+        <div class="delivery-item">
+          <div>
+            <div class="delivery-item-label">Duration</div>
+            <div class="delivery-item-value">6 Weeks</div>
+            <div class="delivery-item-sub">One live session per week, plus self-paced content</div>
+          </div>
+        </div>
+        <div class="delivery-item">
+          <div>
+            <div class="delivery-item-label">Session Times</div>
+            <div class="delivery-item-value">2:00 PM EDT · 7:00 PM WAT</div>
+            <div class="delivery-item-sub">Alternate: 1:00 PM EDT · 6:00 PM WAT</div>
+          </div>
+        </div>
+        <div class="delivery-item">
+          <div>
+            <div class="delivery-item-label">Delivery Mode</div>
+            <div class="delivery-item-value">Virtual (Zoom)</div>
+            <div class="delivery-item-sub">Flipped Classroom Model</div>
+          </div>
+        </div>
+        <div class="delivery-item">
+          <div>
+            <div class="delivery-item-label">Investment</div>
+            <div class="delivery-item-value">Highly Affordable</div>
+            <div class="delivery-item-sub">Donor-subsidised. LMIC pricing available. Registration details shared after info session.</div>
+          </div>
+        </div>
+        <div class="delivery-item">
+          <div>
+            <div class="delivery-item-label">Prerequisites</div>
+            <div class="delivery-item-value">None</div>
+            <div class="delivery-item-sub">Basic computer literacy is sufficient. No prior coding or statistics experience required.</div>
+          </div>
+        </div>
+        <div style="margin-top:24px;">
+          <a href="https://echo.zoom.us/meeting/register/o890jzUFTT2YPC2kCZ3uMg" target="_blank" class="btn-primary" style="width:100%; justify-content:center; box-sizing:border-box; display:flex;">
+            Attend the Free Info Session ›
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<!-- SOCIAL PROOF -->
-<section class="container">
-    <div class="grid">
-        <div class="card">“Highly practical and immediately applicable.”</div>
-        <div class="card">“Clear structure and strong mentorship support.”</div>
-        <div class="card">“One of the most effective analytics trainings I’ve taken.”</div>
-    </div>
-</section>
+<!-- CURRICULUM -->
+<section class="curriculum" id="curriculum">
+  <div class="center">
+    <div class="section-label">Six-Week Curriculum</div>
+    <div class="divider"></div>
+    <h2 class="section-title">What You Will Learn</h2>
+    <p class="section-desc">Each module builds on the previous, taking you from Excel fundamentals to a complete, deployable data project portfolio in six weeks.</p>
+  </div>
 
-<!-- MODULES -->
-<section class="container">
-    <h2>What’s Included</h2>
+  <div class="accordion-wrap">
+
+    <div class="accordion open">
+      <button class="accordion-header" onclick="toggleAccordion(this)">
+        <div class="acc-left">
+          <div class="acc-num">1</div>
+          <div>
+            <div class="acc-title">Microsoft Excel Foundations</div>
+            <div class="acc-subtitle">Data entry, functions, pivot tables, and basic visualisation</div>
+          </div>
+        </div>
+        <span class="acc-week">Week 1</span>
+        <div class="acc-chevron">▾</div>
+      </button>
+      <div class="accordion-body">
+        <div class="acc-topics">
+          <div class="acc-topic">Spreadsheet structure and navigation</div>
+          <div class="acc-topic">Essential formulas: VLOOKUP, IF, SUMIF, INDEX/MATCH</div>
+          <div class="acc-topic">Data cleaning and formatting techniques</div>
+          <div class="acc-topic">Pivot tables and pivot charts</div>
+          <div class="acc-topic">Basic statistical summaries in Excel</div>
+          <div class="acc-topic">Building dashboard-ready templates</div>
+        </div>
+        <div class="acc-outcome">
+          <strong>Week 1 Outcome:</strong> Participants will be able to import, clean, summarise, and visualise structured data in Excel and produce a simple analytical report.
+        </div>
+      </div>
+    </div>
 
     <div class="accordion">
-        <div class="accordion-header">Module 1: Microsoft Excel</div>
-        <div class="accordion-content">Data cleaning, formulas, and analytical foundations.</div>
+      <button class="accordion-header" onclick="toggleAccordion(this)">
+        <div class="acc-left">
+          <div class="acc-num">2</div>
+          <div>
+            <div class="acc-title">R Foundations</div>
+            <div class="acc-subtitle">Introduction to R, RStudio, and data types</div>
+          </div>
+        </div>
+        <span class="acc-week">Week 2</span>
+        <div class="acc-chevron">▾</div>
+      </button>
+      <div class="accordion-body">
+        <div class="acc-topics">
+          <div class="acc-topic">Installing and navigating RStudio</div>
+          <div class="acc-topic">R syntax, operators, and objects</div>
+          <div class="acc-topic">Vectors, data frames, and lists</div>
+          <div class="acc-topic">Importing data from CSV, Excel, and APIs</div>
+          <div class="acc-topic">Working with packages and the tidyverse</div>
+          <div class="acc-topic">Basic descriptive statistics in R</div>
+        </div>
+        <div class="acc-outcome">
+          <strong>Week 2 Outcome:</strong> Participants will be comfortable navigating RStudio, loading real datasets, and running basic exploratory analyses.
+        </div>
+      </div>
     </div>
 
     <div class="accordion">
-        <div class="accordion-header">Module 2: R Foundations</div>
-        <div class="accordion-content">Core programming concepts and environment setup.</div>
+      <button class="accordion-header" onclick="toggleAccordion(this)">
+        <div class="acc-left">
+          <div class="acc-num">3</div>
+          <div>
+            <div class="acc-title">Programming in R and Data Wrangling</div>
+            <div class="acc-subtitle">dplyr, tidyr, and applied data manipulation</div>
+          </div>
+        </div>
+        <span class="acc-week">Week 3</span>
+        <div class="acc-chevron">▾</div>
+      </button>
+      <div class="accordion-body">
+        <div class="acc-topics">
+          <div class="acc-topic">Data pipelines with the pipe operator</div>
+          <div class="acc-topic">filter, select, mutate, summarise, arrange</div>
+          <div class="acc-topic">Reshaping data: pivot_longer and pivot_wider</div>
+          <div class="acc-topic">Joining and merging multiple datasets</div>
+          <div class="acc-topic">Handling missing values and outliers</div>
+          <div class="acc-topic">Writing functions and control flow in R</div>
+        </div>
+        <div class="acc-outcome">
+          <strong>Week 3 Outcome:</strong> Participants will be able to clean, reshape, and transform messy real-world datasets into analysis-ready formats using the tidyverse.
+        </div>
+      </div>
     </div>
 
     <div class="accordion">
-        <div class="accordion-header">Module 3: Data Wrangling</div>
-        <div class="accordion-content">Cleaning, transforming, and structuring data.</div>
+      <button class="accordion-header" onclick="toggleAccordion(this)">
+        <div class="acc-left">
+          <div class="acc-num">4</div>
+          <div>
+            <div class="acc-title">Data Visualisation</div>
+            <div class="acc-subtitle">ggplot2, chart design principles, and storytelling with data</div>
+          </div>
+        </div>
+        <span class="acc-week">Week 4</span>
+        <div class="acc-chevron">▾</div>
+      </button>
+      <div class="accordion-body">
+        <div class="acc-topics">
+          <div class="acc-topic">Grammar of graphics and ggplot2 fundamentals</div>
+          <div class="acc-topic">Bar, line, scatter, box, and map charts</div>
+          <div class="acc-topic">Custom themes, colours, and annotations</div>
+          <div class="acc-topic">Faceting and multi-panel visualisations</div>
+          <div class="acc-topic">Communicating uncertainty and trends</div>
+          <div class="acc-topic">Exporting publication-quality figures</div>
+        </div>
+        <div class="acc-outcome">
+          <strong>Week 4 Outcome:</strong> Participants will produce polished, audience-appropriate data visualisations and demonstrate the ability to build a coherent visual narrative from data.
+        </div>
+      </div>
     </div>
 
     <div class="accordion">
-        <div class="accordion-header">Module 4: Data Visualization</div>
-        <div class="accordion-content">Charts, storytelling, and insight communication.</div>
+      <button class="accordion-header" onclick="toggleAccordion(this)">
+        <div class="acc-left">
+          <div class="acc-num">5</div>
+          <div>
+            <div class="acc-title">Power BI and DAX</div>
+            <div class="acc-subtitle">Interactive dashboards, data models, and DAX measures</div>
+          </div>
+        </div>
+        <span class="acc-week">Week 5</span>
+        <div class="acc-chevron">▾</div>
+      </button>
+      <div class="accordion-body">
+        <div class="acc-topics">
+          <div class="acc-topic">Power BI Desktop interface and navigation</div>
+          <div class="acc-topic">Connecting and transforming data with Power Query</div>
+          <div class="acc-topic">Building data models and relationships</div>
+          <div class="acc-topic">DAX fundamentals: measures and calculated columns</div>
+          <div class="acc-topic">Designing impactful, interactive dashboards</div>
+          <div class="acc-topic">Publishing and sharing reports via Power BI Service</div>
+        </div>
+        <div class="acc-outcome">
+          <strong>Week 5 Outcome:</strong> Participants will be able to build a fully functional, interactive Power BI dashboard from raw data, including custom DAX measures and a clean visual design.
+        </div>
+      </div>
     </div>
 
     <div class="accordion">
-        <div class="accordion-header">Module 5: Power BI & DAX</div>
-        <div class="accordion-content">Dashboard development and analytical modeling.</div>
+      <button class="accordion-header" onclick="toggleAccordion(this)">
+        <div class="acc-left">
+          <div class="acc-num">6</div>
+          <div>
+            <div class="acc-title">Capstone Project and Portfolio Setup</div>
+            <div class="acc-subtitle">End-to-end project, portfolio presentation, and resume revamp</div>
+          </div>
+        </div>
+        <span class="acc-week">Week 6</span>
+        <div class="acc-chevron">▾</div>
+      </button>
+      <div class="accordion-body">
+        <div class="acc-topics">
+          <div class="acc-topic">End-to-end data project: raw data to final report</div>
+          <div class="acc-topic">Portfolio structure and GitHub Pages setup</div>
+          <div class="acc-topic">Presenting findings to a non-technical audience</div>
+          <div class="acc-topic">Peer review and mentor feedback session</div>
+          <div class="acc-topic">Resume revamp and LinkedIn optimisation</div>
+          <div class="acc-topic">Graduation and alumni network onboarding</div>
+        </div>
+        <div class="acc-outcome">
+          <strong>Week 6 Outcome:</strong> Participants will present a complete analytics portfolio project, receive a personalised resume review, and leave fully equipped to apply for data-driven roles or advance within their current organisation.
+        </div>
+      </div>
     </div>
 
-    <div class="accordion">
-        <div class="accordion-header">Module 6: Capstone Project</div>
-        <div class="accordion-content">End-to-end project and portfolio development.</div>
-    </div>
+  </div>
 </section>
 
 <!-- INSTRUCTORS -->
-<section class="container">
-    <h2>Instructors</h2>
-    <div class="grid">
+<section class="instructors" id="instructors">
+  <div class="center">
+    <div class="section-label">Your Mentors</div>
+    <div class="divider"></div>
+    <h2 class="section-title">Learn from Practitioners, Not Just Professors</h2>
+    <p class="section-desc">Every instructor brings active field experience in public health, data science, epidemiology, or global development, ensuring that what you learn connects directly to the work that matters.</p>
+  </div>
 
-        <div class="instructor">
-            <div class="avatar">OD</div>
-            <p>Olutayo Daniel, PhD(c)</p>
+  <div class="instructors-grid">
+
+    <div class="instructor-card">
+      <div class="instructor-top">
+        <div class="instructor-avatar-placeholder">OD</div>
+        <div class="instructor-meta">
+          <div class="instructor-name">Olutayo Daniel, PhD(c)</div>
+          <div class="instructor-title">Lead Instructor &amp; Programme Director</div>
+          <div class="instructor-org">SI Analytics | Founder</div>
         </div>
-
-        <div class="instructor">
-            <div class="avatar">ET</div>
-            <p>Dr Elysee Tuyishime</p>
-        </div>
-
-        <div class="instructor">
-            <div class="avatar">MS</div>
-            <p>Michael Sileshi</p>
-        </div>
-
-        <div class="instructor">
-            <div class="avatar">ES</div>
-            <p>Dr Elvis Safary</p>
-        </div>
-
-        <div class="instructor">
-            <div class="avatar">AF</div>
-            <p>Abigail Fayomi</p>
-        </div>
-
-        <div class="instructor">
-            <div class="avatar">AO</div>
-            <p>Adewale Ogunnaike</p>
-        </div>
-
-        <div class="instructor">
-            <div class="avatar">OA</div>
-            <p>Dr Olugbenga Asaolu</p>
-        </div>
-
+      </div>
+      <p class="instructor-bio">Senior public health scientist, epidemiologist, and data science leader with over 14 years of experience spanning CDC, USAID, academia, and global health implementation. Specialises in health informatics, applied analytics, and capacity building across HIV, TB, malaria, and mortality surveillance.</p>
+      <div class="instructor-tags">
+        <span class="instructor-tag">Epidemiology</span>
+        <span class="instructor-tag">R &amp; Power BI</span>
+        <span class="instructor-tag">Health Informatics</span>
+        <span class="instructor-tag">Global Health</span>
+      </div>
+      <a href="https://www.linkedin.com/in/tayoasaolu/" target="_blank" class="instructor-link">
+        <span class="linkedin-icon">in</span> LinkedIn Profile
+      </a>
     </div>
+
+    <div class="instructor-card">
+      <div class="instructor-top">
+        <div class="instructor-avatar-placeholder">ET</div>
+        <div class="instructor-meta">
+          <div class="instructor-name">Dr Elysee Tuyishime</div>
+          <div class="instructor-title">Data Science &amp; Analytics Instructor</div>
+        </div>
+      </div>
+      <p class="instructor-bio">Experienced data professional and researcher with expertise in applied analytics and statistical modelling, bringing both academic rigour and field-level implementation to each learning session.</p>
+      <div class="instructor-tags">
+        <span class="instructor-tag">Statistical Modelling</span>
+        <span class="instructor-tag">Data Science</span>
+        <span class="instructor-tag">Research Methods</span>
+      </div>
+      <a href="https://www.linkedin.com/in/elysee-tuyishime/" target="_blank" class="instructor-link">
+        <span class="linkedin-icon">in</span> LinkedIn Profile
+      </a>
+    </div>
+
+    <div class="instructor-card">
+      <div class="instructor-top">
+        <div class="instructor-avatar-placeholder">MS</div>
+        <div class="instructor-meta">
+          <div class="instructor-name">Michael Sileshi</div>
+          <div class="instructor-title">Power BI &amp; Data Visualisation Instructor</div>
+        </div>
+      </div>
+      <p class="instructor-bio">Accomplished analytics professional with deep expertise in Power BI, DAX, and business intelligence. Brings a practitioner's perspective to dashboard design, data storytelling, and visualisation best practices.</p>
+      <div class="instructor-tags">
+        <span class="instructor-tag">Power BI</span>
+        <span class="instructor-tag">DAX</span>
+        <span class="instructor-tag">Data Visualisation</span>
+        <span class="instructor-tag">BI Strategy</span>
+      </div>
+      <a href="https://www.linkedin.com/in/michaelsileshi/" target="_blank" class="instructor-link">
+        <span class="linkedin-icon">in</span> LinkedIn Profile
+      </a>
+    </div>
+
+    <div class="instructor-card">
+      <div class="instructor-top">
+        <div class="instructor-avatar-placeholder">ES</div>
+        <div class="instructor-meta">
+          <div class="instructor-name">Dr Elvis Safary, PhD</div>
+          <div class="instructor-title">R Programming &amp; Data Wrangling Instructor</div>
+        </div>
+      </div>
+      <p class="instructor-bio">Research scientist and data expert with a doctoral-level background and hands-on experience in R programming, bioinformatics, and applied data analysis for global health and scientific research.</p>
+      <div class="instructor-tags">
+        <span class="instructor-tag">R Programming</span>
+        <span class="instructor-tag">Bioinformatics</span>
+        <span class="instructor-tag">Scientific Research</span>
+      </div>
+      <a href="https://www.linkedin.com/in/elvis-safary-phd-5b635b1ba/" target="_blank" class="instructor-link">
+        <span class="linkedin-icon">in</span> LinkedIn Profile
+      </a>
+    </div>
+
+    <div class="instructor-card">
+      <div class="instructor-top">
+        <div class="instructor-avatar-placeholder">AF</div>
+        <div class="instructor-meta">
+          <div class="instructor-name">Abigail Fayomi</div>
+          <div class="instructor-title">Excel &amp; Data Foundations Instructor</div>
+        </div>
+      </div>
+      <p class="instructor-bio">Data professional and educator with strong practical expertise in Microsoft Excel, data analysis, and teaching applied analytics to professionals across diverse sectors and experience levels.</p>
+      <div class="instructor-tags">
+        <span class="instructor-tag">Microsoft Excel</span>
+        <span class="instructor-tag">Data Analysis</span>
+        <span class="instructor-tag">Analytics Education</span>
+      </div>
+      <a href="https://www.linkedin.com/in/abigail-fayomi/" target="_blank" class="instructor-link">
+        <span class="linkedin-icon">in</span> LinkedIn Profile
+      </a>
+    </div>
+
+    <div class="instructor-card">
+      <div class="instructor-top">
+        <div class="instructor-avatar-placeholder">AO</div>
+        <div class="instructor-meta">
+          <div class="instructor-name">Adewale Ogunnaike</div>
+          <div class="instructor-title">Applied Analytics Instructor</div>
+        </div>
+      </div>
+      <p class="instructor-bio">Experienced analytics professional with a track record of translating complex data into actionable insights. Brings real-world project experience and a practical teaching approach to every module.</p>
+      <div class="instructor-tags">
+        <span class="instructor-tag">Applied Analytics</span>
+        <span class="instructor-tag">Data Strategy</span>
+        <span class="instructor-tag">Visualisation</span>
+      </div>
+      <a href="https://www.linkedin.com/in/adewale-ogunnaike-b8b3a78b/" target="_blank" class="instructor-link">
+        <span class="linkedin-icon">in</span> LinkedIn Profile
+      </a>
+    </div>
+
+    <div class="instructor-card">
+      <div class="instructor-top">
+        <div class="instructor-avatar-placeholder">GA</div>
+        <div class="instructor-meta">
+          <div class="instructor-name">Dr Olugbenga Asaolu</div>
+          <div class="instructor-title">Research Methods &amp; Capstone Mentor</div>
+        </div>
+      </div>
+      <p class="instructor-bio">Accomplished researcher, public health practitioner, and mentor with extensive experience in applied research, evidence synthesis, and guiding learners through end-to-end analytical projects at the intersection of data and health.</p>
+      <div class="instructor-tags">
+        <span class="instructor-tag">Research Methods</span>
+        <span class="instructor-tag">Public Health</span>
+        <span class="instructor-tag">Evidence Synthesis</span>
+        <span class="instructor-tag">Mentorship</span>
+      </div>
+      <a href="https://www.linkedin.com/in/dr-olugbenga-asaolu/" target="_blank" class="instructor-link">
+        <span class="linkedin-icon">in</span> LinkedIn Profile
+      </a>
+    </div>
+
+  </div>
 </section>
 
 <!-- FAQ -->
-<section class="container">
-    <h2>Frequently Asked Questions</h2>
+<section class="faq" id="faq">
+  <div class="center">
+    <div class="section-label">Frequently Asked Questions</div>
+    <div class="divider"></div>
+    <h2 class="section-title">Your Questions, Answered</h2>
+    <p class="section-desc">If you do not find what you are looking for, attend the free information session or reach out directly at contact@sianalytics.org.</p>
+  </div>
 
-    <p><strong>How much time is required?</strong><br>Approximately 8–10 hours per week.</p>
+  <div class="faq-grid">
 
-    <p><strong>Do I need prior experience?</strong><br>No prior experience required.</p>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span class="faq-q-text">Do I need any prior experience in coding or statistics?</span>
+        <span class="faq-toggle">+</span>
+      </div>
+      <div class="faq-a">No. This programme is designed to meet you where you are. Basic computer literacy is the only prerequisite. We start from the absolute foundations in both Excel and R, and our instructors are experienced in teaching diverse audiences, including complete beginners. If you can use a web browser and a spreadsheet, you have everything you need to start.</div>
+    </div>
 
-    <p><strong>What if I miss a session?</strong><br>All sessions are recorded.</p>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span class="faq-q-text">How much time should I set aside each week?</span>
+        <span class="faq-toggle">+</span>
+      </div>
+      <div class="faq-a">Plan for approximately 6 to 8 hours per week. This includes roughly 2 to 3 hours of pre-recorded instructional content, a 2-hour live Sunday session, and 2 to 3 hours of hands-on practice or assignment completion. The flipped classroom model ensures that live time is spent on application and mentorship, not passive lectures.</div>
+    </div>
 
-    <p><strong>Is the program affordable?</strong><br>Yes. The program is highly subsidized by a donor to ensure accessibility.</p>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span class="faq-q-text">What happens if I miss a live session?</span>
+        <span class="faq-toggle">+</span>
+      </div>
+      <div class="faq-a">All live sessions are recorded and made available to enrolled participants within 24 hours. You will not fall behind if you miss a session occasionally, though consistent attendance is strongly encouraged for the mentorship interaction and peer learning that distinguish this programme. If you anticipate a conflict, notify your instructor in advance.</div>
+    </div>
 
-    <p><strong>Do you offer LMIC pricing?</strong><br>Yes, pricing is adjusted to ensure global accessibility.</p>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span class="faq-q-text">Is this programme affordable for participants from LMICs?</span>
+        <span class="faq-toggle">+</span>
+      </div>
+      <div class="faq-a">Yes, deliberately so. This cohort has been significantly subsidised by a generous donor partner with the explicit goal of reducing financial barriers to quality analytics training. We offer dedicated pricing tiers for participants from low- and middle-income countries, and we encourage you to attend the free information session or contact us directly to discuss what is available to you. Cost should not be a reason you cannot participate.</div>
+    </div>
 
-    <p><strong>Will I build a portfolio?</strong><br>Yes, you will complete a capstone project.</p>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span class="faq-q-text">What is the refund or cancellation policy?</span>
+        <span class="faq-toggle">+</span>
+      </div>
+      <div class="faq-a">A full refund is available if you cancel at least 7 days before the programme start date. Cancellations made within 7 days of the start date are eligible for a 50% refund or a full credit toward a future cohort, whichever you prefer. No refunds are issued after the first session has taken place, though your access to recorded content remains available. Specific terms will be confirmed at the time of registration.</div>
+    </div>
 
-    <p><strong>Is there a certificate?</strong><br>Yes, upon successful completion.</p>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span class="faq-q-text">Will I receive a certificate upon completion?</span>
+        <span class="faq-toggle">+</span>
+      </div>
+      <div class="faq-a">Yes. Participants who complete all six modules, submit their weekly assignments, and present their capstone project will receive a verified digital certificate of completion from SI Analytics. The certificate can be shared on LinkedIn, added to your CV, or included in your portfolio. Attendance alone does not qualify; completion requires demonstrated engagement with the coursework.</div>
+    </div>
 
-    <p><strong>Is there a refund policy?</strong><br>Details are shared during onboarding.</p>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span class="faq-q-text">What tools and software will I need, and are they free?</span>
+        <span class="faq-toggle">+</span>
+      </div>
+      <div class="faq-a">R and RStudio are completely free and open-source. Microsoft Excel is part of the standard Microsoft 365 suite; if you do not have access, free alternatives like Google Sheets or LibreOffice Calc can be used for the first module. Power BI Desktop is free to download from Microsoft. Detailed setup instructions will be provided to all registered participants before the programme begins.</div>
+    </div>
 
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span class="faq-q-text">Is this programme right for working professionals with demanding jobs?</span>
+        <span class="faq-toggle">+</span>
+      </div>
+      <div class="faq-a">Absolutely. The programme is deliberately structured for working professionals. Sessions run on Sundays, pre-recorded content can be consumed on your own schedule, and the six-week format means the commitment is intensive but bounded. Many of our alumni have completed similar programmes while managing full-time roles in government, hospitals, and international organisations. Time management and consistent effort each week are the primary requirements for success.</div>
+    </div>
+
+  </div>
 </section>
 
-<!-- CTA -->
-<section class="cta">
-    <h2>Ready to Get Started?</h2>
-    <p>Secure your spot and begin your analytics journey.</p>
-    <a href="https://echo.zoom.us/meeting/register/o890jzUFTT2YPC2kCZ3uMg" class="btn">Register Now</a>
+<!-- FINAL CTA -->
+<section class="cta-section" id="register">
+  <span class="section-label">Ready to Begin</span>
+  <h2 class="cta-title">Your Analytics Career <em>Starts Here</em></h2>
+  <p class="cta-desc">Join a cohort of professionals across public health, government, academia, and the private sector. Six weeks from now, you will have the skills, the portfolio, and the confidence to lead with data.</p>
+  <div class="cta-buttons">
+    <a href="https://echo.zoom.us/meeting/register/o890jzUFTT2YPC2kCZ3uMg" target="_blank" class="btn-primary" style="font-size:1.05rem; padding:16px 36px;">
+      Register for Free Info Session ›
+    </a>
+    <a href="mailto:contact@sianalytics.org" class="cta-secondary">
+      Contact Us
+    </a>
+  </div>
+  <p class="cta-note">
+    Have questions? Email us at <a href="mailto:contact@sianalytics.org">contact@sianalytics.org</a> or visit <a href="https://www.sianalytics.org" target="_blank">www.sianalytics.org</a>
+  </p>
 </section>
 
+<!-- FOOTER -->
 <footer>
-SI Analytics • Empowering Decisions. Driving Innovation.
+  <div style="display:flex; align-items:center; gap:12px;">
+    <img src="https://raw.githubusercontent.com/SIAnalyticsLab/si-analytics-academy/main/assets/logo.png"
+         class="footer-logo" alt="SI Analytics"
+         onerror="this.style.display='none';" />
+    <span style="font-family:'DM Serif Display',serif; color:rgba(255,255,255,0.5); font-size:0.95rem;">SI Analytics</span>
+  </div>
+  <div class="footer-links">
+    <a href="https://www.sianalytics.org" target="_blank">Website</a>
+    <a href="mailto:contact@sianalytics.org">Email</a>
+    <a href="https://www.linkedin.com/company/strategic-insights-analytics-sia" target="_blank">LinkedIn</a>
+    <a href="#curriculum">Curriculum</a>
+    <a href="#instructors">Instructors</a>
+    <a href="#faq">FAQ</a>
+  </div>
+  <div class="footer-copy">© 2026 SI Analytics. Empowering decisions, driving innovation.</div>
 </footer>
 
 <script>
-document.querySelectorAll(".accordion-header").forEach(item => {
-    item.addEventListener("click", () => {
-        const content = item.nextElementSibling;
-        content.style.display = content.style.display === "block" ? "none" : "block";
-    });
-});
+  function toggleAccordion(btn) {
+    const acc = btn.closest('.accordion');
+    const isOpen = acc.classList.contains('open');
+    document.querySelectorAll('.accordion').forEach(a => a.classList.remove('open'));
+    if (!isOpen) acc.classList.add('open');
+  }
+
+  function toggleFaq(el) {
+    const item = el.closest('.faq-item');
+    item.classList.toggle('open');
+  }
 </script>
 
 </body>
